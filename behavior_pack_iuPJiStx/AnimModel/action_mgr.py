@@ -16,7 +16,18 @@ class PlayerActionManager(object):
         # 动画相关
         self.anim_list = []
         self.blend_value = 0  # 混合值，0是idle，1是walk
-        self.state = ''
+        self.animation_stack = ["idle"]
+        self.anim_blend_values = {
+            'idle_walk': {
+                'blend_value': 0.0
+            },
+            'walk_jump': {
+                'blend_value': 0.0
+            },
+            'idle_jump': {
+                'blend_value': 0.0
+            }
+        }
         self.listen_engine_events()
 
     def listen_engine_events(self):
@@ -44,23 +55,12 @@ class PlayerActionManager(object):
         # 同一时间，两个动画都在后台进行播放
         # anim_list结果是 ['idle', 'walk']
         self.register_anim_param('idle', 'walk', 'idle_walk')
+        self.register_anim_param('walk', 'jump', 'walk_jump')
+        self.register_anim_param('idle', 'jump', 'idle_jump')
         self.play_anim('idle', True, True)
-        self.play_anim('walk', True, True)
 
     def Update(self):
         self.update_anim_list()
-        self.set_anim_param('idle_walk', self.blend_value)
-        logger.debug(self.blend_value)
-        if self.state == 'walk':
-            if self.blend_value >= 1:
-                self.blend_value = 1
-                return
-            self.blend_value += 0.1
-        if self.state == 'idle':
-            if self.blend_value <= 0:
-                self.blend_value = 0
-                return
-            self.blend_value -= 0.1
 
     def on_key_press(self, args):
         """调试用"""
@@ -116,13 +116,55 @@ class PlayerActionManager(object):
 
     # =====================================================================
     def walking_begin(self, args):
-        self.state = 'walk'
-
+        self.animation_stack.append('walk')
+        self.play_anim('walk', True, True)
+        self.update_idle_and_walk_value('+')
+        
+    def update_idle_and_walk_value(self, operator):
+        if operator == '+':
+            if self.anim_blend_values['idle_walk']['blend_value'] < 1.0:
+                self.anim_blend_values['idle_walk']['blend_value'] += 0.1
+            elif self.anim_blend_values['idle_walk']['blend_value'] >= 1.0:
+                return
+        if operator == '-':
+            if self.anim_blend_values['idle_walk']['blend_value'] > 0.1:
+                self.anim_blend_values['idle_walk']['blend_value'] -= 0.1
+                if self.anim_blend_values['idle_walk']['blend_value'] == 0.0:
+                    self.stop_anim('walk')
+                    return
+        self.set_anim_param('idle_walk', self.anim_blend_values['idle_walk']['blend_value'])
+        clientApi.GetEngineCompFactory().CreateGame(clientApi.GetLevelId()).AddTimer(0.0,
+                                                                                     self.update_idle_and_walk_value,
+                                                                                     operator)
+    
     def walking_end(self, args):
-        self.state = 'idle'
+        self.animation_stack.remove('walk')
+        self.update_idle_and_walk_value('-')
 
     def jump_begin(self, args):
-        pass
-
+        if 'jump' not in self.animation_stack:
+            self.animation_stack.append('jump')
+        self.play_anim('jump', True, True)
+        prev_anim = self.animation_stack[-2]
+        def update_blend_value():
+            self.anim_blend_values['{}_jump'.format(prev_anim)]['blend_value'] += 0.1
+            if self.anim_blend_values['{}_jump'.format(prev_anim)]['blend_value'] >= 1.0:
+                return
+            self.set_anim_param('{}_jump'.format(prev_anim), self.anim_blend_values['{}_jump'.format(prev_anim)]['blend_value'])
+            clientApi.GetEngineCompFactory().CreateGame(clientApi.GetLevelId()).AddTimer(0.0, update_blend_value)
+        
+        update_blend_value()
+        
     def jump_end(self, args):
-        pass
+        prev_anim = self.animation_stack[-2]
+        if 'jump' in self.animation_stack:
+            self.animation_stack.remove('jump')
+        def update_blend_value():
+            self.anim_blend_values['{}_jump'.format(prev_anim)]['blend_value'] -= 0.1
+            if self.anim_blend_values['{}_jump'.format(prev_anim)]['blend_value'] <= 0.0:
+                self.stop_anim('jump')
+                return
+            self.set_anim_param('{}_jump'.format(prev_anim), self.anim_blend_values['{}_jump'.format(prev_anim)]['blend_value'])
+            clientApi.GetEngineCompFactory().CreateGame(clientApi.GetLevelId()).AddTimer(0.0, update_blend_value)
+        
+        update_blend_value()
