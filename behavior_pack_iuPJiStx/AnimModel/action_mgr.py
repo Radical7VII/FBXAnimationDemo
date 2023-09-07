@@ -15,6 +15,8 @@ class PlayerActionManager(object):
         self.model_id = None
         # 动画相关
         self.anim_list = []
+        self.blend_value = 0  # 混合值，0是idle，1是walk
+        self.state = ''
         self.listen_engine_events()
 
     def listen_engine_events(self):
@@ -36,9 +38,29 @@ class PlayerActionManager(object):
     def ui_init(self, args=None):
         # logger.debug('初始化')
         self.model_id = self.set_model()
+        self.init_anim()
+
+    def init_anim(self):
+        # 同一时间，两个动画都在后台进行播放
+        # anim_list结果是 ['idle', 'walk']
+        self.register_anim_param('idle', 'walk', 'idle_walk')
+        self.play_anim('idle', True, True)
+        self.play_anim('walk', True, True)
 
     def Update(self):
         self.update_anim_list()
+        self.set_anim_param('idle_walk', self.blend_value)
+        logger.debug(self.blend_value)
+        if self.state == 'walk':
+            if self.blend_value >= 1:
+                self.blend_value = 1
+                return
+            self.blend_value += 0.1
+        if self.state == 'idle':
+            if self.blend_value <= 0:
+                self.blend_value = 0
+                return
+            self.blend_value -= 0.1
 
     def on_key_press(self, args):
         """调试用"""
@@ -81,19 +103,23 @@ class PlayerActionManager(object):
         comp = clientApi.GetEngineCompFactory().CreateModel(self.player_id)
         comp.ModelStopAni(self.model_id, anim_name)
 
+    def register_anim_param(self, anim1, anim2, param_name):
+        """注册动画混合"""
+        comp = clientApi.GetEngineCompFactory().CreateModel(self.player_id)
+        comp.RegisterAnim1DControlParam(self.model_id, anim1, anim2, param_name)
+
     def set_anim_param(self, param_name, value):
+        """设置动画混合值"""
         comp = clientApi.GetEngineCompFactory().CreateModel(self.player_id)
         suc = comp.SetAnim1DControlParam(self.model_id, param_name, value)
-        self.param_dict[param_name] = value
-        # logger.debug(self.param_dict)
         return suc
 
     # =====================================================================
     def walking_begin(self, args):
-        pass
+        self.state = 'walk'
 
     def walking_end(self, args):
-        pass
+        self.state = 'idle'
 
     def jump_begin(self, args):
         pass
