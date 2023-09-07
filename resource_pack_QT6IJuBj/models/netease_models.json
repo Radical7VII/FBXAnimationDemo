@@ -1,0 +1,63 @@
+{
+    "coordinate": {
+        "dy_load": false,
+        "mesh": "mesh/coordinate_mesh.json",
+        "skeleton": "skeleton/coordinate_skeleton.json"
+    },
+    "lazer_gun": {
+        "animation": {
+            "shoot": "animation/lazer_gun_animation_shoot.json"
+        },
+        "dy_load": false,
+        "mesh": "mesh/lazer_gun_mesh.json",
+        "skeleton": "skeleton/lazer_gun_skeleton.json"
+    },
+    "multi_point_1": {
+        "animation": {
+            "anim": "animation/multi_point_1_animation_anim.json"
+        },
+        "dy_load": false,
+        "mesh": "mesh/multi_point_1_mesh.json",
+        "skeleton": "skeleton/multi_point_1_skeleton.json"
+    },
+    "multi_point_2": {
+        "animation": {
+            "anim": "animation/multi_point_2_animation_anim.json"
+        },
+        "dy_load": false,
+        "mesh": "mesh/multi_point_2_mesh.json",
+        "skeleton": "skeleton/multi_point_2_skeleton.json"
+    },
+    "player_ascii": {
+        "dy_load": false,
+        "mesh": "mesh/player_ascii_mesh.json",
+        "skeleton": "skeleton/player_ascii_skeleton.json"
+    },
+    "player_base": {
+        "animation": {
+            "idle": "animation/player_base_animation_idle.json",
+            "jump": "animation/player_base_animation_jump.json",
+            "shoot": "animation/player_base_animation_shoot.json",
+            "walk": "animation/player_base_animation_walk.json"
+        },
+        "dy_load": false,
+        "mesh": "mesh/player_base_mesh.json",
+        "skeleton": "skeleton/player_base_skeleton.json"
+    },
+    "rabbit": {
+        "animation": {
+            "Walking": "animation/rabbit_animation_Walking.json",
+            "idle": "animation/rabbit_animation_idle.json",
+            "jump": "animation/rabbit_animation_jump.json",
+            "shoot": "animation/rabbit_animation_shoot.json"
+        },
+        "dy_load": false,
+        "mesh": "mesh/rabbit_mesh.json",
+        "skeleton": "skeleton/rabbit_skeleton.json"
+    },
+    "squid": {
+        "dy_load": false,
+        "mesh": "mesh/squid_mesh.json",
+        "skeleton": "skeleton/squid_skeleton.json"
+    }
+}

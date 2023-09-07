@@ -1,0 +1,17 @@
+{
+    "Arena.Component.Namespace": "iosrp",
+    "FirstTabSetting": 1,
+    "ShortItemSettings": [
+        "resource_pack_QT6IJuBj\\ui",
+        "behavior_pack_iuPJiStx\\Presets",
+        "behavior_pack_iuPJiStx\\Parts",
+        "behavior_pack_iuPJiStx\\BoxData",
+        "resource_pack_QT6IJuBj\\effects",
+        "resource_pack_QT6IJuBj\\models",
+        "resource_pack_QT6IJuBj\\textures"
+    ],
+    "Uluru.autoLayerDict": {
+
+    },
+    "Uluru.checkSuspectOldUI": true
+}

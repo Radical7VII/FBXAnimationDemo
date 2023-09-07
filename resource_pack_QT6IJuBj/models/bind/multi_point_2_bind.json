@@ -1,0 +1,27 @@
+{
+    "version": "1.2.0",
+    "description": {
+        "file_type": "bind",
+        "model": "multi_point_2",
+        "model_type": "model"
+    },
+    "model": {
+        "multi_point_2": {
+            "bind": {
+                "default": {}
+            },
+            "animation": {
+                "": "default"
+            },
+            "sounds": {
+                "default": []
+            },
+            "animation_speed": {}
+        }
+    },
+    "editor": {
+        "show": {
+            "default": true
+        }
+    }
+}

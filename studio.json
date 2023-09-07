@@ -1,0 +1,53 @@
+{
+    "Account": "sdzxcf@126.com",
+    "AssertCacheDir": "C:\\MCStudioDownload\\EngineAssert",
+    "BlockNums": [
+        0,
+        0
+    ],
+    "BornPoint": [
+        0,
+        0,
+        0
+    ],
+    "CanPublishResourceComponent": false,
+    "CodeEnable": false,
+    "CreateNew": true,
+    "CreateVersion": "2.6.0.369780",
+    "DCWebUrl": "https://x19apigatewayexpr.nie.netease.com",
+    "EditAddOnPaths": [
+
+    ],
+    "EditLogFilePath": "C:\\MCStudioDownload\\work\\editor\\edit.log",
+    "EditMaterialPaths": [
+
+    ],
+    "EditName": "FBX动画系统",
+    "EditType": 3,
+    "EditVersion": "2.7.0.395512",
+    "EditorResourcePackPath": "C:\\Program Files (x86)\\Netease\\MCStudio\\data\\inner_res",
+    "ElkUrl": "https://x19mclexpr.nie.netease.com/client-log",
+    "GameType": 1,
+    "Id": "41a5c23b969e487eb8eeac20ffc9f0eb",
+    "IsMap": false,
+    "NewEditCount": 27,
+    "OldComponents": [
+
+    ],
+    "OldEditCount": 0,
+    "ResourceIds": [
+
+    ],
+    "SaveBackAddOnPath": "C:\\MCStudioDownload\\work\\sdzxcf@126.com\\Cpp\\AddOn\\41a5c23b969e487eb8eeac20ffc9f0eb",
+    "SaveBackMapPath": null,
+    "Seed": "",
+    "ServerName": "EXPR",
+    "ShowGpuDriverTips": false,
+    "ShowGuide": false,
+    "Source": "空白附加包",
+    "StudioPort": 10808,
+    "StudioTempPath": "C:\\MCStudioDownload\\temp\\editorTemp",
+    "UserId": "46325",
+    "UserName": "Othniel",
+    "WorldType": 2
+}
